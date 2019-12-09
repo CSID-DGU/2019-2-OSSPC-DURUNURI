@@ -177,7 +177,7 @@ public class GameClient implements Runnable{
 		 
 	}
 	public void reDrawBlockShap(TetrisBlock shap) {
-		tetris.getBoard().drawBlockShap(shap);
+		//tetris.getBoard().drawBlockShap(shap); by in
 	}//drawBlockShap HK
 	
 	public void drawBlockDeposit(ArrayList<Block> blockList2) {

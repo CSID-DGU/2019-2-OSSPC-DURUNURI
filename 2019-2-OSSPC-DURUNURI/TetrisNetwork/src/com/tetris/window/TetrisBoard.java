@@ -50,7 +50,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 	private int minX=1, maxX=10, maxY=21, down=50, up=0;
 	private final int MESSAGE_WIDTH = BLOCK_SIZE * 7;
 	private final int MESSAGE_HEIGHT = BLOCK_SIZE * 6;
-	private final int PANEL_WIDTH = 2*(maxX*BLOCK_SIZE + MESSAGE_WIDTH + BOARD_X);
+	private final int PANEL_WIDTH = (maxX*BLOCK_SIZE + MESSAGE_WIDTH + BOARD_X);
 	private final int PANEL_HEIGHT = maxY*BLOCK_SIZE + MESSAGE_HEIGHT + BOARD_Y;
 	
 	private stopwatch stopw = new stopwatch(this,BLOCK_SIZE*1,BOARD_Y + BLOCK_SIZE + BLOCK_SIZE*7, BLOCK_SIZE*5, BLOCK_SIZE*5);
@@ -396,7 +396,9 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		}
 		// 1p 2p 사이선
 		//g.drawLine(this.getWidth()/2, BOARD_Y, this.getWidth()/2, BOARD_Y+maxY*BLOCK_SIZE);
-			
+		
+		/*
+		
 		// <<2p 화면>>
 		// 까만 배경 부분
 		g.setColor(Color.BLACK);
@@ -469,6 +471,9 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 				3*BOARD_X + BLOCK_SIZE*(i+minX) + 2*maxX*BLOCK_SIZE, BOARD_Y + BLOCK_SIZE*(minX+19));
 			
 		}
+		
+		*/
+		
 		// 홀드 블록 그리기
 		int x=0,y=0,newY=0;
 		if(hold!=null){
@@ -530,6 +535,9 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 			shap.setPosY(y);
 			shap.drawBlock(g);
 		}
+		
+		/*
+		
 		//상대블록을 그리는 것을 유지한다.
 		try {
 			drawBlockShap(shap2, g);
@@ -539,9 +547,12 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		}catch(NullPointerException e) {
 		e.printStackTrace();
 		}//repaint_drawBlock
+		
+		*/
+		
 	}
 
-	/* 상대 블록 그리기 HK */
+	/* 상대 블록 그리기 HK 
 	public void drawBlockShap(TetrisBlock shap, Graphics g) {
 		if(shap!=null){
 
@@ -558,6 +569,8 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 	public void drawBlockShap(TetrisBlock shap) {
 		drawBlockShap(shap, getGraphics());
 	}//drawBlockShap
+
+	*/
 
 	public void drawBlockDeposit(ArrayList<Block> blockList, Graphics g) {
 		if(blockList!=null){
