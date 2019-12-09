@@ -91,6 +91,10 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 	private int removeLineCount = 0;
 	private int removeLineCombo = 0;
 	
+	private int TotalLineRemoved =0;// sjl 11/21
+	private int score=0;//sjl 12/03
+	private boolean isCombo = false;// sjl 12/06
+		
 	public static boolean usingEffect= true;
 	public static boolean usingBGM=true; //라인 추가 05/22
 	public Music GameMusic ;
@@ -962,18 +966,16 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 	 * @param removeMaxLine	한번에 지운 줄수 
 	 */
 	public void getFixBlockCallBack(ArrayList<Block> blockList, int removeCombo, int removeMaxLine){
-		if(removeCombo<3){
-			if(removeMaxLine==1)client.addBlock(1);
-			else if(removeMaxLine==4)client.addBlock(3);
-		}else if(removeCombo<10){
-			if(removeMaxLine==3)client.addBlock(2);
-			else if(removeMaxLine==4)client.addBlock(4);
-			else client.addBlock(1);
-		}else{
-			if(removeMaxLine==3)client.addBlock(3);
-			else if(removeMaxLine==4)client.addBlock(5);
-			else client.addBlock(2);
-		}
+		if(isCombo) {
+            client.addBlock(removeMaxLine);
+            TotalLineRemoved+=removeMaxLine;
+            setScore(getScore() + (int)(100*Math.pow(2, removeMaxLine-1)*Math.pow(2, removeCombo-1)*(comboSpeed.getSelectedIndex()+1)));
+            stopw.checkScore();
+      }      
+      if(TotalLineRemoved>=20) {
+         gameEndCallBack();
+
+      }
 	}
 	
 	/**
@@ -1132,6 +1134,13 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		}
 	}
 	
+	public void speedup() {
+	      //20미만이면 증가
+	      if((int) comboSpeed.getSelectedItem()<20) {
+	         comboSpeed.setSelectedItem(lv[comboSpeed.getSelectedIndex()+1]);;
+	      }
+	      
+	}// sjl
 	
 	public JComboBox<Integer> getComboSpeed() {return comboSpeed;}// HK
 	public void setComboSpeed(JComboBox<Integer> comboSpeed) {this.comboSpeed = comboSpeed;}// HK
@@ -1152,5 +1161,13 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		messageArea.clearMessage();
 		systemMsg.clearMessage();
 	}
+	
+	public int getScore() {
+	      return score;
+	   }
+
+	public void setScore(int score) {
+	      this.score = score;
+	   }
 
 }

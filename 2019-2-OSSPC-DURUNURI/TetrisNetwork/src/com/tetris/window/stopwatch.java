@@ -21,19 +21,28 @@ import java.awt.BorderLayout;
 
 
 public class stopwatch extends JPanel {
+	
+	private static final long serialVersionUID = 1L; //sj
 		
 	private TetrisBoard board;
 	// 생성자로 받기위해 TetrisBoard를 가져옴
 	
 	public JLabel timeText;
 	
+	public JLabel score; //sj
+	
 	private TimeThread timeTh; 
 	// 시간 쓰레드
 	
 	private long time = 01, preTime = 01; 
+	
+	private int speedcheck, speedcheck1 = 0; //sj
 		
 	public stopwatch(TetrisBoard board, int x, int y, int width, int height)  {
 		this.board = board;
+		
+		this.speedcheck=0; this.speedcheck1=30;
+		
 		this.setBounds(x, y, width, height);
 		// 위치, 너비, 넓이를 정함
 		
@@ -80,7 +89,7 @@ public class stopwatch extends JPanel {
 		time = System.currentTimeMillis() - preTime;
 		
 		
-		int m1 = (int)(time / 1000.0 / 60.0);
+		//int m1 = (int)(time / 1000.0 / 60.0); //sj
 		int s1 = (int)(time % (1000.0 * 60) / 1000.0);
 		//int ms1 = (int)(time % 1000 / 10.0);
 		if (s1%2==1) {
@@ -132,10 +141,30 @@ public class stopwatch extends JPanel {
 		}
 	// 나가기를 눌렀을 때 시간을 초기화하기 위한 코드
 	
+	public void checkScore() {
+	      score.setText(toScore());
+	}
+
+	
+	private String toScore() {
+	      return ("score "+board.getScore());   
+	}
+	
 	private String toTime(long time){
 		int m = (int)(time / 1000.0 / 60.0);
 		int s = (int)(time % (1000.0 * 60) / 1000.0);
 		//int ms = (int)(time % 1000 / 10.0);
+		
+		if(m-speedcheck!=0) {
+	         System.out.println("60초");
+	         board.speedup();
+	         speedcheck=m;
+	         speedcheck1=30;
+	    } else if(s-speedcheck1==0) {
+	         System.out.println("30초");
+	         board.speedup();
+	         speedcheck1=0;
+	    }
 		
 		return String.format("%02d : %02d ", m, s);
 	}
