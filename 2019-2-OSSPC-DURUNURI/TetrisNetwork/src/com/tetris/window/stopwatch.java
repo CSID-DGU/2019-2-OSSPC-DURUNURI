@@ -12,52 +12,39 @@ import javax.swing.JPanel;
 
 
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.awt.BorderLayout;
-
-
 public class stopwatch extends JPanel {
+	private static final long serialVersionUID = 1L;
 	
-	private static final long serialVersionUID = 1L; //sj
-		
 	private TetrisBoard board;
-	// »ı¼ºÀÚ·Î ¹Ş±âÀ§ÇØ TetrisBoard¸¦ °¡Á®¿È
+	// ìƒì„±ìë¡œ ë°›ê¸°ìœ„í•´ TetrisBoardë¥¼ ê°€ì ¸ì˜´
 	
 	public JLabel timeText;
-	
-	public JLabel score; //sj
+	public JLabel score; 
 	
 	private TimeThread timeTh; 
-	// ½Ã°£ ¾²·¹µå
+	// ì‹œê°„ ì“°ë ˆë“œ
 	
 	private long time = 01, preTime = 01; 
-	
-	private int speedcheck, speedcheck1 = 0; //sj
+	private int speedcheck, speedcheck1 = 0;
 		
 	public stopwatch(TetrisBoard board, int x, int y, int width, int height)  {
 		this.board = board;
-		
 		this.speedcheck=0; this.speedcheck1=30;
-		
 		this.setBounds(x, y, width, height);
-		// À§Ä¡, ³Êºñ, ³ĞÀÌ¸¦ Á¤ÇÔ
+		// ìœ„ì¹˜, ë„ˆë¹„, ë„“ì´ë¥¼ ì •í•¨
 		
 		this.setLayout(new BorderLayout());
 		
 		this.add(centerPanel(), "Center");
 		
 	}
-	// »ı¼ºÀÚ¸¦ ¸¸µç´Ù.
+	// ìƒì„±ìë¥¼ ë§Œë“ ë‹¤.
 	
 	public Panel centerPanel(){
 		GridBagLayout gridLayout = new GridBagLayout();
 		GridBagConstraints constraints = new GridBagConstraints();
 		this.setBackground(Color.black);
-		// ¹è°æÀ» °ËÀº »öÀ¸·Î ¼³Á¤
+		// ë°°ê²½ì„ ê²€ì€ ìƒ‰ìœ¼ë¡œ ì„¤ì •
 		
 		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.weightx = 1;
@@ -71,12 +58,12 @@ public class stopwatch extends JPanel {
 		constraints.gridy = 1;
 		centerPanel.add(timeText, constraints);
 
-		JLabel title = new JLabel("Å¸ÀÌ¸Ó ¿¹½Ã");
-		title.setForeground(Color.white);
-		title.setFont(new Font("Gothic", Font.BOLD, 10));
+		score = new JLabel(toScore());
+		score.setForeground(Color.white);
+		score.setFont(new Font("Gothic", Font.BOLD, 10));
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		centerPanel.add(title, constraints);
+		centerPanel.add(score, constraints);
 
 		return centerPanel;
 		}
@@ -89,7 +76,7 @@ public class stopwatch extends JPanel {
 		time = System.currentTimeMillis() - preTime;
 		
 		
-		//int m1 = (int)(time / 1000.0 / 60.0); //sj
+		//int m1 = (int)(time / 1000.0 / 60.0);
 		int s1 = (int)(time % (1000.0 * 60) / 1000.0);
 		//int ms1 = (int)(time % 1000 / 10.0);
 		if (s1%2==1) {
@@ -102,8 +89,8 @@ public class stopwatch extends JPanel {
 		}
 		}
 		}
-	// ms1Àº ¾È º¸ÀÌµµ·Ï ¼³Á¤
-	// ÇöÀç ÃÊ°¡ Â¦¼öÀÏ ¶§¸¶´Ù ±ÛÀÚÀÇ »öÀÌ º¯ÇÑ´Ù.
+	// ms1ì€ ì•ˆ ë³´ì´ë„ë¡ ì„¤ì •
+	// í˜„ì¬ ì´ˆê°€ ì§ìˆ˜ì¼ ë•Œë§ˆë‹¤ ê¸€ìì˜ ìƒ‰ì´ ë³€í•œë‹¤.
 	
 	public void start(){
 		
@@ -115,7 +102,7 @@ public class stopwatch extends JPanel {
 			
 		}	
 	}
-	// ½ºÅé¿öÄ¡¸¦ ½ÃÀÛÇÏ´Â ÄÚµå
+	// ìŠ¤í†±ì›Œì¹˜ë¥¼ ì‹œì‘í•˜ëŠ” ì½”ë“œ
 	
 	public void stop(){
 		if(timeTh.isAlive()) {
@@ -133,21 +120,19 @@ public class stopwatch extends JPanel {
 		time = 0l;
 		timeText.setText(toTime(time));
 	}
-	// Å×Æ®¸®½ºº¸µå¿¡¼­ ´Ù½Ã ½ÃÀÛ¹öÆ°À» ´©¸¦ ¶§ ½Ã°£À» ÃÊ±âÈ­ ½ÃÄÑÁÖ´Â ÄÚµå
+	// í…ŒíŠ¸ë¦¬ìŠ¤ë³´ë“œì—ì„œ ë‹¤ì‹œ ì‹œì‘ë²„íŠ¼ì„ ëˆ„ë¥¼ ë•Œ ì‹œê°„ì„ ì´ˆê¸°í™” ì‹œì¼œì£¼ëŠ” ì½”ë“œ
 	
 	public void pause(){
 		if(timeTh == null) return;
 		if(timeTh.isAlive()) timeTh.interrupt();
 		}
-	// ³ª°¡±â¸¦ ´­·¶À» ¶§ ½Ã°£À» ÃÊ±âÈ­ÇÏ±â À§ÇÑ ÄÚµå
-	
+	// ë‚˜ê°€ê¸°ë¥¼ ëˆŒë €ì„ ë•Œ ì‹œê°„ì„ ì´ˆê¸°í™”í•˜ê¸° ìœ„í•œ ì½”ë“œ
 	public void checkScore() {
-	      score.setText(toScore());
+		score.setText(toScore());
 	}
-
 	
 	private String toScore() {
-	      return ("score "+board.getScore());   
+		return ("score "+board.getScore());	
 	}
 	
 	private String toTime(long time){
@@ -156,18 +141,18 @@ public class stopwatch extends JPanel {
 		//int ms = (int)(time % 1000 / 10.0);
 		
 		if(m-speedcheck!=0) {
-	         System.out.println("60ÃÊ");
-	         board.speedup();
-	         speedcheck=m;
-	         speedcheck1=30;
-	    } else if(s-speedcheck1==0) {
-	         System.out.println("30ÃÊ");
-	         board.speedup();
-	         speedcheck1=0;
-	    }
-		
+			System.out.println("60ì´ˆ");
+			board.speedup();
+			speedcheck=m;
+			speedcheck1=30;
+		} else if(s-speedcheck1==0) {
+			System.out.println("30ì´ˆ");
+			board.speedup();
+			speedcheck1=0;
+		}
 		return String.format("%02d : %02d ", m, s);
 	}
-	// msÀ» ¾È º¸ÀÌ°Ô ¼û±è
+	// msì„ ì•ˆ ë³´ì´ê²Œ ìˆ¨ê¹€
 
 }
+
