@@ -35,8 +35,8 @@ public class Nemo extends TetrisBlock implements Serializable {
 		this.rotation_index = rotation_index;
 		switch(rotation_index){
 		case ROTATION_0 : 
-			colBlock[2].setFixGridXY(0,-1);
-			colBlock[3].setFixGridXY(1,-1);
+			colBlock[2].setFixGridXY(0,1);
+			colBlock[3].setFixGridXY(1,1);
 			colBlock[0].setFixGridXY(0,0);
 			colBlock[1].setFixGridXY(1,0);
 			break;
