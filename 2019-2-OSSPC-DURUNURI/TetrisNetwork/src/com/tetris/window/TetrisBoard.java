@@ -324,13 +324,32 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		g.setColor(Color.BLACK);
 		// 가운데
 		g.fillRect(BOARD_X, BOARD_Y, maxX*BLOCK_SIZE, maxY*BLOCK_SIZE);
+		
+		g.setColor(Color.WHITE);
+		g.drawRect(BOARD_X, BOARD_Y, maxX*BLOCK_SIZE, maxY*BLOCK_SIZE);
+		g.setColor(Color.BLACK);
+		
 		// 왼쪽
 		g.fillRect(BLOCK_SIZE*minX ,BOARD_Y + BLOCK_SIZE, BLOCK_SIZE*5,BLOCK_SIZE*5);
+		
+		g.setColor(Color.WHITE);
+		g.drawRect(BLOCK_SIZE*minX ,BOARD_Y + BLOCK_SIZE, BLOCK_SIZE*5,BLOCK_SIZE*5);
+		g.setColor(Color.BLACK);
+		
 		// 오른쪽 위
 		g.fillRect(BOARD_X + maxX*BLOCK_SIZE+ BLOCK_SIZE*minX, BOARD_Y + BLOCK_SIZE, BLOCK_SIZE*5,BLOCK_SIZE*5);
+		
+		g.setColor(Color.WHITE);
+		g.drawRect(BOARD_X + maxX*BLOCK_SIZE+ BLOCK_SIZE*minX, BOARD_Y + BLOCK_SIZE, BLOCK_SIZE*5,BLOCK_SIZE*5);
+		g.setColor(Color.BLACK);
+		
 		// 오른쪽 아래
 		g.fillRect(BOARD_X + maxX*BLOCK_SIZE + BLOCK_SIZE*minX, BOARD_Y + BLOCK_SIZE + BLOCK_SIZE*7, BLOCK_SIZE*5,BLOCK_SIZE*12);
-			
+		
+		g.setColor(Color.WHITE);
+		g.drawRect(BOARD_X + maxX*BLOCK_SIZE + BLOCK_SIZE*minX, BOARD_Y + BLOCK_SIZE + BLOCK_SIZE*7, BLOCK_SIZE*5,BLOCK_SIZE*12);
+		g.setColor(Color.BLACK);
+		
 		//HOLD  NEXT 출력
 		g.setFont(new Font(font.getFontName(),font.getStyle(),20));
 		g.setColor(Color.BLACK);
@@ -340,7 +359,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 				
 		//그리드 표시
 		if(usingGrid){
-			g.setColor(Color.darkGray);
+			g.setColor(Color.WHITE);
 			// 가운데 가로줄
 			for(int i=1;i<maxY;i++) 
 				g.drawLine(BOARD_X, BOARD_Y+BLOCK_SIZE*i, BOARD_X + maxX*BLOCK_SIZE, BOARD_Y + BLOCK_SIZE*i);
@@ -361,21 +380,50 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 			for(int i=1;i<5;i++) 
 				g.drawLine(BOARD_X + maxX*BLOCK_SIZE + BLOCK_SIZE*(i+minX), BOARD_Y + BLOCK_SIZE*minX, 
 				BOARD_X + maxX*BLOCK_SIZE + BLOCK_SIZE*(i+minX), BOARD_Y + BLOCK_SIZE*(minX+5));	
+			
+			// 오른쪽 아래 가로줄
+			for(int i=7;i<19;i++) 
+				g.drawLine(BOARD_X + BLOCK_SIZE*minX + maxX*BLOCK_SIZE, BOARD_Y + BLOCK_SIZE*(i+minX), 
+				BOARD_X + maxX*BLOCK_SIZE + BLOCK_SIZE*(minX+5), BOARD_Y + BLOCK_SIZE*(i+minX));
+			// 오른쪽 아래 세로줄
+			for(int i=1;i<5;i++) 
+				g.drawLine(BOARD_X + BLOCK_SIZE*minX + (i+maxX)*BLOCK_SIZE, BOARD_Y + BLOCK_SIZE*(7+minX),
+				BOARD_X + BLOCK_SIZE*minX + (i+maxX)*BLOCK_SIZE, BOARD_Y + BLOCK_SIZE*(minX+19));
+			
 		}
 		// 1p 2p 사이선
-		g.drawLine(this.getWidth()/2, BOARD_Y, this.getWidth()/2, BOARD_Y+maxY*BLOCK_SIZE);
+		//g.drawLine(this.getWidth()/2, BOARD_Y, this.getWidth()/2, BOARD_Y+maxY*BLOCK_SIZE);
 			
 		// <<2p 화면>>
 		// 까만 배경 부분
 		g.setColor(Color.BLACK);
 		// 가운데
 		g.fillRect(3*BOARD_X+maxX*BLOCK_SIZE, BOARD_Y, maxX*BLOCK_SIZE, maxY*BLOCK_SIZE);
+		
+		g.setColor(Color.WHITE);
+		g.drawRect(3*BOARD_X+maxX*BLOCK_SIZE, BOARD_Y, maxX*BLOCK_SIZE, maxY*BLOCK_SIZE);
+		g.setColor(Color.BLACK);
+		
 		// 왼쪽
 		g.fillRect(2*BOARD_X+maxX*BLOCK_SIZE+BLOCK_SIZE*minX,BOARD_Y + BLOCK_SIZE, BLOCK_SIZE*5,BLOCK_SIZE*5);
+		
+		g.setColor(Color.WHITE);
+		g.drawRect(2*BOARD_X+maxX*BLOCK_SIZE+BLOCK_SIZE*minX,BOARD_Y + BLOCK_SIZE, BLOCK_SIZE*5,BLOCK_SIZE*5);
+		g.setColor(Color.BLACK);
+		
 		// 오른쪽 위
 		g.fillRect(3*BOARD_X + 2*maxX*BLOCK_SIZE+BLOCK_SIZE*minX, BOARD_Y + BLOCK_SIZE, BLOCK_SIZE*5,BLOCK_SIZE*5);
+		
+		g.setColor(Color.WHITE);
+		g.drawRect(3*BOARD_X + 2*maxX*BLOCK_SIZE+BLOCK_SIZE*minX, BOARD_Y + BLOCK_SIZE, BLOCK_SIZE*5,BLOCK_SIZE*5);
+		g.setColor(Color.BLACK);
+		
 		// 오른쪽 아래
 		g.fillRect(3*BOARD_X + 2*maxX*BLOCK_SIZE+BLOCK_SIZE*minX, BOARD_Y + BLOCK_SIZE + BLOCK_SIZE*7, BLOCK_SIZE*5,BLOCK_SIZE*12);
+		
+		g.setColor(Color.WHITE);
+		g.drawRect(3*BOARD_X + 2*maxX*BLOCK_SIZE+BLOCK_SIZE*minX, BOARD_Y + BLOCK_SIZE + BLOCK_SIZE*7, BLOCK_SIZE*5,BLOCK_SIZE*12);
+		g.setColor(Color.BLACK);
 		
 		//HOLD  NEXT 출력
 		g.setFont(new Font(font.getFontName(),font.getStyle(),20));
@@ -386,7 +434,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		
 		//그리드 표시
 		if(usingGrid){
-			g.setColor(Color.darkGray);
+			g.setColor(Color.WHITE);
 			// 가운데 가로줄
 			for(int i=1;i<maxY;i++) 
 				g.drawLine(3*BOARD_X+maxX*BLOCK_SIZE, BOARD_Y+BLOCK_SIZE*i, 3*BOARD_X + 2*maxX*BLOCK_SIZE, BOARD_Y + BLOCK_SIZE*i);
@@ -402,11 +450,21 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 			// 오른쪽 위 가로줄
 			for(int i=1;i<5;i++) 
 				g.drawLine(3*BOARD_X + 2*maxX*BLOCK_SIZE+BLOCK_SIZE*minX, BOARD_Y + BLOCK_SIZE*(i+minX), 
-						3*BOARD_X + 2*maxX*BLOCK_SIZE+BLOCK_SIZE*(minX+5), BOARD_Y + BLOCK_SIZE*(i+minX));
+				3*BOARD_X + 2*maxX*BLOCK_SIZE+BLOCK_SIZE*(minX+5), BOARD_Y + BLOCK_SIZE*(i+minX));
 			// 오른쪽 위 세로줄
 			for(int i=1;i<5;i++) 
 				g.drawLine(3*BOARD_X + 2*maxX*BLOCK_SIZE+BLOCK_SIZE*(i+minX), BOARD_Y + BLOCK_SIZE*minX, 
-						3*BOARD_X + 2*maxX*BLOCK_SIZE+BLOCK_SIZE*(i+minX), BOARD_Y + BLOCK_SIZE*(minX+5));	
+				3*BOARD_X + 2*maxX*BLOCK_SIZE+BLOCK_SIZE*(i+minX), BOARD_Y + BLOCK_SIZE*(minX+5));	
+			
+			// 오른쪽 아래 가로줄
+			for(int i=7;i<19;i++) 
+				g.drawLine(3*BOARD_X + BLOCK_SIZE*minX + 2*maxX*BLOCK_SIZE, BOARD_Y + BLOCK_SIZE*(i+minX), 
+				3*BOARD_X + 2*maxX*BLOCK_SIZE + BLOCK_SIZE*(minX+5), BOARD_Y + BLOCK_SIZE*(i+minX));
+			// 오른쪽 아래 세로줄
+			for(int i=1;i<5;i++) 
+				g.drawLine(3*BOARD_X + BLOCK_SIZE*(i+minX) + 2*maxX*BLOCK_SIZE, BOARD_Y + BLOCK_SIZE*(7+minX),
+				3*BOARD_X + BLOCK_SIZE*(i+minX) + 2*maxX*BLOCK_SIZE, BOARD_Y + BLOCK_SIZE*(minX+19));
+			
 		}
 		// 홀드 블록 그리기
 		int x=0,y=0,newY=0;
