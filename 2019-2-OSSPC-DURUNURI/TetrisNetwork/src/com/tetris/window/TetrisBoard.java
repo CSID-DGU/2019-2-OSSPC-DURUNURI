@@ -50,6 +50,8 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 	private final int PANEL_WIDTH = 2*(maxX*BLOCK_SIZE + MESSAGE_WIDTH + BOARD_X);
 	private final int PANEL_HEIGHT = maxY*BLOCK_SIZE + MESSAGE_HEIGHT + BOARD_Y;
 	
+	private stopwatch stopw = new stopwatch(this,BLOCK_SIZE*1,BOARD_Y + BLOCK_SIZE + BLOCK_SIZE*7, BLOCK_SIZE*5, BLOCK_SIZE*5);
+	
 	private SystemMessageArea systemMsg = new SystemMessageArea(BLOCK_SIZE*1,BOARD_Y + BLOCK_SIZE + BLOCK_SIZE*7, BLOCK_SIZE*5, BLOCK_SIZE*12);
 	private MessageArea messageArea = new MessageArea(this,0, PANEL_HEIGHT - MESSAGE_HEIGHT, PANEL_WIDTH-BLOCK_SIZE*7, MESSAGE_HEIGHT);
 	private JButton btnStart = new JButton("시작하기");
@@ -117,6 +119,11 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 				Music MousePressedSound= new Music("Magic_Chime.mp3",false);
 				MousePressedSound.start();
 			}
+			
+			public void mousePressed(MouseEvent e) {					
+				stopw.prstop();
+				stopw.start();	
+			}
 		
 		});//0525 효과음(버튼)추가
 		btnExit.addMouseListener(new MouseAdapter() {
@@ -127,6 +134,10 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 			public void mouseEntered(MouseEvent e) {
 				Music MousePressedSound= new Music("Magic_Chime.mp3",false);
 				MousePressedSound.start();
+			}
+			
+			public void mousePressed(MouseEvent e) {
+				stopw.stop();
 			}
 		
 		});//0525 효과음(버튼)추가
@@ -211,7 +222,9 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		comboSpeed.setBounds(PANEL_WIDTH - BLOCK_SIZE*13, 5, 45, 20);
 		this.add(comboSpeed);
 		
-		this.add(systemMsg);
+		this.add(stopw);
+		
+		//this.add(systemMsg);
 		this.add(messageArea);
 		this.add(btnStart);		
 		this.add(btnExit);
