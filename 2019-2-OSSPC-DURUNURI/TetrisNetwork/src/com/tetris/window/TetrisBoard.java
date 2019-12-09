@@ -3,6 +3,9 @@ package com.tetris.window;
 import java.awt.Color;import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+
+import java.awt.Image;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -236,10 +239,10 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		icon = new ImageIcon(TetrisMain.class.getResource("../../../Images/desert-1654439_1920.jpg")); //배경으로 쓸 사진 파일 불러오기
 		
 		// 배경화면 사이즈 조절
-		/*
-		 * Image temp = icon.getImage(); Image temp2 = temp.getScaledInstance(1000, 600,
-		 * Image.SCALE_SMOOTH); icon2 = new ImageIcon(temp2);
-		 */
+		
+		Image temp = icon.getImage(); Image temp2 = temp.getScaledInstance(1000, 600,
+		Image.SCALE_SMOOTH); icon2 = new ImageIcon(temp2);
+		 
 	}
 	
 	public void startNetworking(String ip, int port, String nickName){
@@ -303,7 +306,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		g.setColor(new Color(189,142,98));
 		g.fillRect(0, BOARD_Y, 2*(2*BOARD_X+maxX*BLOCK_SIZE), maxY*BLOCK_SIZE);
 		*/
-		g.drawImage(icon.getImage(),0, 0, null); // 배경화면 그리기
+		g.drawImage(icon2.getImage(),0, 0, null); // 배경화면 그리기
 		// g.drawImage(icon2.getImage(),0, 0, null); // 사이즈 조절된 배경화면 그리기
 		
 		// 보드 내 폰트 설정
