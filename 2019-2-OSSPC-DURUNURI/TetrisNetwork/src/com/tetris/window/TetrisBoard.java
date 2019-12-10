@@ -373,7 +373,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 				
 		//그리드 표시
 		if(usingGrid){
-			g.setColor(Color.darkGray);
+			g.setColor(Color.WHITE);
 			// 가운데 가로줄
 			for(int i=1;i<maxY;i++) 
 				g.drawLine(BOARD_X, BOARD_Y+BLOCK_SIZE*i, BOARD_X + maxX*BLOCK_SIZE, BOARD_Y + BLOCK_SIZE*i);
@@ -450,7 +450,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 				
 			//그리드 표시	
 			if(usingGrid){	
-				g.setColor(Color.darkGray);	
+				g.setColor(Color.WHITE);	
 				// 가운데 가로줄	
 				for(int i=1;i<maxY;i++) 	
 					g.drawLine(3*BOARD_X+maxX*BLOCK_SIZE, BOARD_Y+BLOCK_SIZE*i, 3*BOARD_X + 2*maxX*BLOCK_SIZE, BOARD_Y + BLOCK_SIZE*i);	
