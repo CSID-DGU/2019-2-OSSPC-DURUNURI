@@ -12,21 +12,21 @@ import com.tetris.classes.Block;
 import com.tetris.classes.TetrisBlock;
 import com.tetris.window.Tetris;
 
-//---------------------[ Å¬¶óÀÌ¾ğÆ® ]---------------------
+//---------------------[ í´ë¼ì´ì–¸íŠ¸ ]---------------------
 public class GameClient implements Runnable{
 	private Tetris tetris;
 	private Socket socket;
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
 
-	//¼­¹ö IP
+	//ì„œë²„ IP
 	private String ip;
 	private int port;
 	private String name;
 	private int index;
 	private boolean isPlay;
 	
-	//»ı¼ºÀÚ
+	//ìƒì„±ì
 	public GameClient(Tetris tetris,String ip, int port, String name){
 		this.tetris = tetris;
 		this.ip = ip;
@@ -38,14 +38,14 @@ public class GameClient implements Runnable{
 		return this.execute();	
 	}
 
-	//¼ÒÄÏ & IO Ã³¸®
+	//ì†Œì¼“ & IO ì²˜ë¦¬
 	public boolean execute(){
 		try{
 			socket = new Socket(ip,port);
 			ip = InetAddress.getLocalHost().getHostAddress();
 			oos = new ObjectOutputStream(socket.getOutputStream());
 			ois = new ObjectInputStream(socket.getInputStream());
-			System.out.println("Å¬¶óÀÌ¾ğÆ®°¡ ½ÇÇà ÁßÀÔ´Ï´Ù.");
+			System.out.println("í´ë¼ì´ì–¸íŠ¸ê°€ ì‹¤í–‰ ì¤‘ì…ë‹ˆë‹¤.");
 		}catch(UnknownHostException e){
 			e.printStackTrace();
 			return false;
@@ -56,19 +56,19 @@ public class GameClient implements Runnable{
 
 		tetris.getBoard().clearMessage();
 		
-		//ÀÌ¸§º¸³»±â
+		//ì´ë¦„ë³´ë‚´ê¸°
 		DataShip data = new DataShip();
 		data.setIp(ip);
 		data.setName(name);
 		send(data);
 		
-		//¸®½ºÆ®¹Ş¾Æ¿À±â
+		//ë¦¬ìŠ¤íŠ¸ë°›ì•„ì˜¤ê¸°
 		printSystemMessage(DataShip.PRINT_SYSTEM_OPEN_MESSAGE);
-		//¸®½ºÆ®¿¡ Ãß°¡ÇÏ±â
+		//ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€í•˜ê¸°
 		printSystemMessage(DataShip.PRINT_SYSTEM_ADDMEMBER_MESSAGE);
-		//ÀÎµ¦½º¹Ş¾Æ¿À±â
+		//ì¸ë±ìŠ¤ë°›ì•„ì˜¤ê¸°
 		setIndex();
-		//½º·¹µå
+		//ìŠ¤ë ˆë“œ
 		Thread t = new Thread(this);
 		t.start();
 		System.out.println(this.index);
@@ -77,7 +77,7 @@ public class GameClient implements Runnable{
 	}//execute()
 
 	
-	//Run : ¼­¹öÀÇ ¸í·ÉÀ» ±â´Ù¸².
+	//Run : ì„œë²„ì˜ ëª…ë ¹ì„ ê¸°ë‹¤ë¦¼.
 	public void run(){
 		DataShip data = null;
 		while(true){
@@ -89,7 +89,7 @@ public class GameClient implements Runnable{
 			
 
 
-			//¼­¹ö·ÎºÎÅÍ DataShip Object¸¦ ¹Ş¾Æ¿È.
+			//ì„œë²„ë¡œë¶€í„° DataShip Objectë¥¼ ë°›ì•„ì˜´.
 			if(data == null) continue;
 			if(data.getCommand() == DataShip.CLOSE_NETWORK){
 				reCloseNetwork();
@@ -101,7 +101,7 @@ public class GameClient implements Runnable{
 			}else if(data.getCommand() == DataShip.ADD_BLOCK){
 				if(isPlay)reAddBlock(data.getMsg(), data.getNumOfBlock(), data.getIndex());
 				if(index != data.getIndex()) {
-					tetris.getBoard().removeLineImage(); // °ø°İ ½Ã ÀÌ¹ÌÁö HK
+					//tetris.getBoard().removeLineImage(); // ê³µê²© ì‹œ ì´ë¯¸ì§€ HK
 				}
 			}else if(data.getCommand() == DataShip.SET_INDEX){
 				reSetIndex(data.getIndex());
@@ -122,7 +122,7 @@ public class GameClient implements Runnable{
 				rePrintSystemMessage(data.getMsg()+"\nTOTAL ADD : "+data.getTotalAdd());
 				tetris.getBoard().setPlay(false);
 			}else if(data.getCommand() == DataShip.DRAW_BLOCK_SHAP) {		//HK
-				// ³»°¡ º¸³½ ¿äÃ»ÀÌ ¾Æ´Ï¾úÀ» °æ¿ì(»ó´ë¹æ ÇÃ·¹ÀÌ¾îÀÇ ºí·ÏÀÌ ÀÌµ¿ÇÑ °æ¿ì) È­¸é¿¡ ±×¸°´Ù.
+				// ë‚´ê°€ ë³´ë‚¸ ìš”ì²­ì´ ì•„ë‹ˆì—ˆì„ ê²½ìš°(ìƒëŒ€ë°© í”Œë ˆì´ì–´ì˜ ë¸”ë¡ì´ ì´ë™í•œ ê²½ìš°) í™”ë©´ì— ê·¸ë¦°ë‹¤.
 				if(data.getPlayer() != this.index) {
 					reDrawBlockShap(data.getShap());
 					tetris.getBoard().setShap(data.getShap());
@@ -150,7 +150,7 @@ public class GameClient implements Runnable{
 	}//run()
 
 
-	// ¼­¹ö¿¡°Ô ¿äÃ»ÇÔ
+	// ì„œë²„ì—ê²Œ ìš”ì²­í•¨
 	public void send(DataShip data){
 		try{
 			oos.writeObject(data); 
@@ -163,7 +163,7 @@ public class GameClient implements Runnable{
 	
 	
 	
-	//¿äÃ»ÇÏ±â : »ó´ëºí·Ï ±×¸®±â HK
+	//ìš”ì²­í•˜ê¸° : ìƒëŒ€ë¸”ë¡ ê·¸ë¦¬ê¸° HK
 	public void drawBlockShap(TetrisBlock shap) {
 		DataShip data = new DataShip(DataShip.DRAW_BLOCK_SHAP);
 		data.setShap(shap);
@@ -171,7 +171,7 @@ public class GameClient implements Runnable{
 		send(data);
 		System.out.println("client : "+shap.getPosX()+","+shap.getPosY());
 		
-		  try{ oos.reset(); //ºí·ÏÀÇ ÁÂÇ¥¸¦ ¾÷µ¥ÀÌÆ®ÇÑ´Ù
+		  try{ oos.reset(); //ë¸”ë¡ì˜ ì¢Œí‘œë¥¼ ì—…ë°ì´íŠ¸í•œë‹¤
 		  }catch(IOException e){
 		  e.printStackTrace(); }
 		 
@@ -186,7 +186,7 @@ public class GameClient implements Runnable{
 		data.setPlayer(index);
 		send(data);
 		
-		  try{ oos.reset(); //ºí·ÏÀÇ ÁÂÇ¥¸¦ ¾÷µ¥ÀÌÆ®ÇÑ´Ù.
+		  try{ oos.reset(); //ë¸”ë¡ì˜ ì¢Œí‘œë¥¼ ì—…ë°ì´íŠ¸í•œë‹¤.
 		  }catch(IOException e){
 		  e.printStackTrace(); }
 	}
@@ -200,7 +200,7 @@ public class GameClient implements Runnable{
 		data.setPlayer(index);
 		send(data);
 		
-		  try{ oos.reset(); //ºí·ÏÀÇ ÁÂÇ¥¸¦ ¾÷µ¥ÀÌÆ®ÇÑ´Ù. 
+		  try{ oos.reset(); //ë¸”ë¡ì˜ ì¢Œí‘œë¥¼ ì—…ë°ì´íŠ¸í•œë‹¤. 
 		  }catch(IOException e){
 		  e.printStackTrace(); }
 		 
@@ -215,7 +215,7 @@ public class GameClient implements Runnable{
 		data.setPlayer(index);
 		send(data);
 		
-		  try{ oos.reset(); //ºí·ÏÀÇ ÁÂÇ¥¸¦ ¾÷µ¥ÀÌÆ®ÇÑ´Ù. 
+		  try{ oos.reset(); //ë¸”ë¡ì˜ ì¢Œí‘œë¥¼ ì—…ë°ì´íŠ¸í•œë‹¤. 
 		  }catch(IOException e){
 		  e.printStackTrace(); }
 		 
@@ -225,13 +225,13 @@ public class GameClient implements Runnable{
 	}//drawBlockNext HK
 
 	
-	//¿äÃ»ÇÏ±â : ¿¬°á²÷±â
+	//ìš”ì²­í•˜ê¸° : ì—°ê²°ëŠê¸°
 	public void closeNetwork(boolean isServer){
 		DataShip data = new DataShip(DataShip.CLOSE_NETWORK);
 		if(isServer) data.setCommand(DataShip.SERVER_EXIT);
 		send(data);
 	}
-	//½ÇÇàÇÏ±â : ¿¬°á²÷±â
+	//ì‹¤í–‰í•˜ê¸° : ì—°ê²°ëŠê¸°
 	public void reCloseNetwork(){
 
 		tetris.closeNetwork();
@@ -244,24 +244,24 @@ public class GameClient implements Runnable{
 		}
 	}
 	
-	//¿äÃ»ÇÏ±â : °ÔÀÓ½ÃÀÛ
+	//ìš”ì²­í•˜ê¸° : ê²Œì„ì‹œì‘
 	public void gameStart(int speed){
 		DataShip data = new DataShip(DataShip.GAME_START);
 		data.setSpeed(speed);
 		send(data);
 	}
-	//½ÇÇàÇÏ±â : °ÔÀÓ½ÃÀÛ
+	//ì‹¤í–‰í•˜ê¸° : ê²Œì„ì‹œì‘
 	public void reGameStart(boolean isPlay, String msg, int speed){
 		this.isPlay = isPlay;
 		tetris.gameStart(speed);
 		rePrintSystemMessage(msg);
 	}
-	//¿äÃ»ÇÏ±â : ¸Ş½ÃÁö
+	//ìš”ì²­í•˜ê¸° : ë©”ì‹œì§€
 	public void printSystemMessage(int cmd){
 		DataShip data = new DataShip(cmd);
 		send(data);
 	}
-	//½ÇÇàÇÏ±â : ¸Ş½ÃÁö
+	//ì‹¤í–‰í•˜ê¸° : ë©”ì‹œì§€
 	public void rePrintSystemMessage(String msg){
 		tetris.printSystemMessage(msg);
 	}
@@ -273,11 +273,11 @@ public class GameClient implements Runnable{
 	public void reAddBlock(String msg, int numOfBlock, int index){
 		if(index != this.index) {
 			tetris.getBoard().addBlockLine(numOfBlock);
-			// ¸¸¾à ¼Óµµ°¡ 15 ÀÌ»óÀÌ¶ó¸é ÃÖ°í ¼Óµµ·Î °íÁ¤ÇÑ´Ù. HK
+			// ë§Œì•½ ì†ë„ê°€ 15 ì´ìƒì´ë¼ë©´ ìµœê³  ì†ë„ë¡œ ê³ ì •í•œë‹¤. HK
 			if(tetris.getBoard().getComboSpeed().getSelectedIndex() >= 14) {
 				tetris.getBoard().getComboSpeed().setSelectedIndex(19);
 			}
-			// ¼Óµµ°¡ 15º¸´Ù ³·À¸¸é ¼Óµµ¸¦ 5¸¸Å­ ¿Ã¸°´Ù. HK
+			// ì†ë„ê°€ 15ë³´ë‹¤ ë‚®ìœ¼ë©´ ì†ë„ë¥¼ 5ë§Œí¼ ì˜¬ë¦°ë‹¤. HK
 			else { 
 			Integer speed = tetris.getBoard().getComboSpeed().getSelectedIndex() + 5;
 			tetris.getBoard().getComboSpeed().setSelectedIndex(speed);
@@ -296,7 +296,7 @@ public class GameClient implements Runnable{
 		this.index = index;
 	}
 	
-	//¿äÃ»ÇÏ±â : °ÔÀÓÁ¾·á
+	//ìš”ì²­í•˜ê¸° : ê²Œì„ì¢…ë£Œ
 	public void gameover(){
 		DataShip data = new DataShip(DataShip.GAME_OVER);
 		send(data);
