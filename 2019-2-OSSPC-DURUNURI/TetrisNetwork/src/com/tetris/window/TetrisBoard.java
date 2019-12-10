@@ -131,8 +131,8 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 				MousePressedSound.start();
 			}
 			public void mousePressed(MouseEvent e) {
-				stopw.prstop();
-				stopw.start();
+				//stopw.prstop();
+				//stopw.start();
 			}
 			
 				
