@@ -20,6 +20,8 @@ MIT License
 ### **Original Source Code** 
 
 https://github.com/CSID-DGU/2017-2-OSSP-jalhaebojo-2
+
+https://github.com/CSID-DGU/2019-1-OSSPC-HK-4
  
 ### **MP3 Source & GIF Source** 
 
